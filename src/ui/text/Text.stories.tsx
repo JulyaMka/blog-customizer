@@ -48,7 +48,7 @@ export const SelectStory: Story = {
 			control: { type: 'select' },
 		},
 	},
-	render: (args) => {
+	render: (args: any) => {
 		return (
 			<Text {...args}>
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi, nulla.
