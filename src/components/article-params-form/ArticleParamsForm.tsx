@@ -62,7 +62,10 @@ export const ArticleParamsForm = ({
 				className={`${styles.container} ${
 					isOpen ? styles.container_open : ''
 				}`}>
+
+
 				<form className={styles.form} onSubmit={handleFormSubmit}>
+					<h2 className={styles.title}>Задайте параметры</h2>
 					<Select
 						title='Шрифт'
 						selected={formSettings.fontFamilyOption}
