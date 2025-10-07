@@ -14,6 +14,8 @@ import {
 	defaultArticleState,
 	ArticleStateType,
 } from 'src/constants/articleProps';
+import { Text } from 'src/ui/text';
+import { clsx } from 'clsx';
 
 import styles from './ArticleParamsForm.module.scss';
 //import { FormatSizeTwoTone } from '@mui/icons-material';
@@ -27,7 +29,7 @@ export const ArticleParamsForm = ({
 	currentSettings,
 	onApply,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const formRef = useRef<HTMLDivElement>(null);
 	const [formSettings, setformSettings] = useState(currentSettings);
 
@@ -36,36 +38,39 @@ export const ArticleParamsForm = ({
 	}, [currentSettings]);
 
 	useOutsideClickClose({
-		isOpen: isOpen,
+		isOpen: isOpenMenu,
 		rootRef: formRef,
-		onChange: setIsOpen,
-		onClose: () => setIsOpen(false),
+		onChange: setIsOpenMenu,
+		onClose: () => setIsOpenMenu(false),
 	});
 
 	const handleFormSubmit = (evt: React.FormEvent) => {
 		evt.preventDefault();
 		onApply(formSettings);
-		setIsOpen(false);
+		setIsOpenMenu(false);
 	};
 
 	const handleFormReset = () => {
 		setformSettings(defaultArticleState);
 		onApply(defaultArticleState);
-		setIsOpen(false);
+		setIsOpenMenu(false);
 	};
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+			<ArrowButton
+				isOpen={isOpenMenu}
+				onClick={() => setIsOpenMenu(!isOpenMenu)}
+			/>
 			<aside
 				ref={formRef}
-				className={`${styles.container} ${
-					isOpen ? styles.container_open : ''
-				}`}>
-
-
+				className={clsx(styles.container, {
+					[styles.container_open]: isOpenMenu,
+				})}>
 				<form className={styles.form} onSubmit={handleFormSubmit}>
-					<h2 className={styles.title}>Задайте параметры</h2>
+					<Text as='h2' size={31} weight={800} uppercase>
+						Задайте параметры
+					</Text>
 					<Select
 						title='Шрифт'
 						selected={formSettings.fontFamilyOption}
